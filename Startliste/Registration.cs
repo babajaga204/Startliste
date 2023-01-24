@@ -26,10 +26,10 @@ namespace Startliste
             Console.WriteLine(
                 _startNumber.PadRight(15) 
                 + _name.PadRight(35)
-                + _club.PadRight(35)
+                + _club.PadRight(50)
                 + _nationality.PadRight(15) 
                 + _group.PadRight(50)
-                + _class.PadLeft(10)
+                + _class
             );
         }
     }
