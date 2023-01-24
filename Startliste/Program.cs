@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Text;
 
 namespace Startliste;
 
@@ -7,24 +8,31 @@ internal class Program
     public static void Main(string[] args)
     {
         var registrationList = GetParticipants();
+        var clubNames = new List<string>();
+        registrationList.ForEach(item =>
+        {
+            if (clubNames.Contains(item._club) || item._club.Length < 2) return;
+            clubNames.Add(item._club);
+            
+        });
+        var clubs = clubNames
+            .Select(clubName => new Club(clubName.Trim(), new List<Registration>()))
+            .ToList();
+        
+        clubs.ForEach(club =>
+        {
+            club._registrations = new List<Registration>(registrationList.Where(registration => registration._club == club._name));
+        });
+
+        foreach (var club in clubs)
+        {
+            club.ShowStats();
+        }
     }
 
     private static void PrintList(List<Registration> registrationList)
     {
-        registrationList.ForEach(r =>
-        {
-            if (r == registrationList[0])
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                r.Show();
-                Console.ResetColor();
-                Console.WriteLine();
-            }
-            else
-            {
-                r.Show();
-            }
-        });
+        registrationList.ForEach(r => r.Show());
     }
 
     private static List<Registration> GetParticipants()
@@ -44,6 +52,7 @@ internal class Program
                 participantInfo[5].Trim('"')
                 )
         ).ToList();
+        registrationList.RemoveAt(0);
         return registrationList;
     }
 }

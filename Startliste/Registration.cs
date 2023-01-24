@@ -4,12 +4,12 @@ namespace Startliste
 {
     internal class Registration
     {
-        private string _startNumber;
-        private string _name;
-        private string _club;
-        private string _nationality;
-        private string _group;
-        private string _class;
+        public string _startNumber;
+        public string _name;
+        public string _club;
+        public string _nationality;
+        public string _group;
+        public string _class;
 
         public Registration(string startNumber, string name, string club, string nationality, string group, string @class)
         {
